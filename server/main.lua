@@ -33,7 +33,20 @@ local http_server = require('http.server')
 local json = require('json')
 local handlers =  {}
 
+function len(t)
+    local c = 0
+    for _ in pairs(t) do 
+      c = c + 1 
+    end
+    
+    return c
+end
+
 function handlers.add(req)
+    if len(req:param()) ~= 2 then
+        return {status = 400}
+    end
+
     local key = req:param('key')
     local value = req:param('value')
 
@@ -52,6 +65,10 @@ function handlers.add(req)
 end
 
 function handlers.update(req)
+    if len(req:param()) ~= 1 then
+        return {status = 400}
+    end
+
     local key = req:stash('id')
     local value = req:param('value')
     
