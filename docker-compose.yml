@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  tarantool:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+      - "3301:3301"
+    command:
+      ["tarantool", "/opt/tarantool/server/main.lua"]
+    volumes:
+      - ./server:/opt/tarantool/server
